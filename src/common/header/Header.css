@@ -23,27 +23,6 @@
 header {
     background: #181818;
 }
-.inner {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 0px 20px;
-    position: relative;
-}
-.logo {
-    text-decoration: none;
-    color: #777;
-    font-weight: 800;
-    font-size: 30px;
-    line-height: 40px;
-}
-h1 {
-    text-align: center;
-    width: 100%;
-    margin-top: 120px;
-    color: #eee;
-    font-weight: 800;
-    font-size: 40px;
-}
 ul {
     text-align: right;
     width: 94%;
