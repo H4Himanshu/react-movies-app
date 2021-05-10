@@ -11,6 +11,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
 import PropTypes from 'prop-types';
 import FormHelperText from '@material-ui/core/FormHelperText';
+import ReactDOM from 'react-dom';
+import BookShow from '../../screens/BookShow/BookShow';
 
 const customStyles = {
     content: {
@@ -74,60 +76,72 @@ class Header extends Component {
     }
 
     loginClickHandler = () => {
-        this.state.username === "" ? this.setState({usernameRequired: "dispBlock"}) : this.setState({usernameRequired: "dispNone"});
-        this.state.password === "" ? this.setState({passwordRequired: "dispBlock"}) : this.setState({passwordRequired: "dispNone"});
+        this.state.username === "" ? this.setState({ usernameRequired: "dispBlock" }) : this.setState({ usernameRequired: "dispNone" });
+        this.state.password === "" ? this.setState({ passwordRequired: "dispBlock" }) : this.setState({ passwordRequired: "dispNone" });
     }
 
     registerClickHandler = () => {
-        this.state.firstname === "" ? this.setState({firstNameRequired: "dispBlock"}) : this.setState({firstNameRequired: "dispNone"});
-        this.state.lastname === "" ? this.setState({lastNameRequired: "dispBlock"}) : this.setState({lastNameRequired: "dispNone"});
-        this.state.registerpassword === "" ? this.setState({registerPasswordRequired: "dispBlock"}) : this.setState({registerPasswordRequired: "dispNone"});
-        this.state.contactnumber === "" ? this.setState({contactNumberRequired: "dispBlock"}) : this.setState({contactNumberRequired: "dispNone"});
-        this.state.email === "" ? this.setState({emailRequired: "dispBlock"}) : this.setState({emailRequired: "dispNone"});
+        this.state.firstname === "" ? this.setState({ firstNameRequired: "dispBlock" }) : this.setState({ firstNameRequired: "dispNone" });
+        this.state.lastname === "" ? this.setState({ lastNameRequired: "dispBlock" }) : this.setState({ lastNameRequired: "dispNone" });
+        this.state.registerpassword === "" ? this.setState({ registerPasswordRequired: "dispBlock" }) : this.setState({ registerPasswordRequired: "dispNone" });
+        this.state.contactnumber === "" ? this.setState({ contactNumberRequired: "dispBlock" }) : this.setState({ contactNumberRequired: "dispNone" });
+        this.state.email === "" ? this.setState({ emailRequired: "dispBlock" }) : this.setState({ emailRequired: "dispNone" });
     }
 
     inputUsernameChangeHandler = (e) => {
-        this.setState({username: e.target.value}); 
+        this.setState({ username: e.target.value });
     }
 
     inputPasswordChangeHandler = (e) => {
-        this.setState({password: e.target.value}); 
+        this.setState({ password: e.target.value });
     }
 
-    inputFirstnameChangeHandler = (e) =>{
-        this.setState({firstname: e.target.value});
+    inputFirstnameChangeHandler = (e) => {
+        this.setState({ firstname: e.target.value });
     }
 
-    inputLastnameChangeHandler = (e) =>{
-        this.setState({lastname: e.target.value});
+    inputLastnameChangeHandler = (e) => {
+        this.setState({ lastname: e.target.value });
     }
 
-    inputRegisterPasswordChangeHandler = (e) =>{
-        this.setState({registerpassword: e.target.value});
+    inputRegisterPasswordChangeHandler = (e) => {
+        this.setState({ registerpassword: e.target.value });
     }
 
-    inputEmailChangeHandler = (e) =>{
-        this.setState({email: e.target.value});
+    inputEmailChangeHandler = (e) => {
+        this.setState({ email: e.target.value });
     }
-    
-    inputContactNumberChangeHandler = (e) =>{
-        this.setState({contactnumber: e.target.value});
+
+    inputContactNumberChangeHandler = (e) => {
+        this.setState({ contactnumber: e.target.value });
     }
 
     resetStateHandler = () => {
         this.setState(initialState);
-     }
+    }
+
+    bookShowHandler = (e) => {
+        ReactDOM.render(<BookShow />, document.getElementById('root'));
+    }
 
     render() {
         return (
             <div>
                 <header className="app-header">
                     <img src={logo} className="app-logo" alt="logo"></img>
-                    <ul>
-                        <li>
+                    <ul style={{display: 'inline-flex'}}>
+                        <li style={{position: 'relative', left: '88%'}}>
                             <Button variant="contained" color="default" onClick={this.openModalHandler}> Login</Button>
                         </li>
+                        <li style={{position: 'relative', left: '90%'}}>
+                            {this.props.showBookShowButton === "true" ?
+                                <Button variant="contained" color="primary" onClick={this.bookShowHandler}>
+                                    Book Show
+                            </Button>
+                                : ""}
+                        </li>
                     </ul>
+
                 </header>
                 <Modal ariaHideApp={false} isOpen={this.state.modelIsOpen} content="Login" onRequestClose={this.closeModalHandler} style={customStyles}>
                     <Tabs value={this.state.value} onChange={this.tabChangeHandler}>
@@ -149,7 +163,7 @@ class Header extends Component {
                             <Button variant="contained" color="primary" onClick={this.loginClickHandler}>LOGIN</Button>
                         </TabContainer>
                     }
-                     {this.state.value === 1 &&
+                    {this.state.value === 1 &&
                         <TabContainer>
                             <FormControl required>
                                 <InputLabel htmlFor="firstName">First Name</InputLabel>

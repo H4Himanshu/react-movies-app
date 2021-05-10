@@ -74,3 +74,8 @@ ul li ul li > a {
 .red {
     color: red;
 }
+
+.bookshow-button {
+    float: right;
+    margin-right: 8px;
+}
