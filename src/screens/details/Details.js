@@ -1,8 +1,10 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import Header from '../../common/header/Header';
 import moviesData from '../../assets/movieData';
+import Typography from '@material-ui/core/Typography';
+import './Details.css';
 
-class Details extends Component{
+class Details extends Component {
     constructor() {
         super();
         this.state = {
@@ -10,7 +12,7 @@ class Details extends Component{
         }
     }
 
-    componentDidMount() {
+    componentWillMount() {
         let currentState = this.state;
         currentState.movie = moviesData.filter((mov) => {
             return mov.id === this.props.movieId
@@ -19,16 +21,37 @@ class Details extends Component{
         console.log(this.state);
     }
 
-   render() {
+    render() {
+        let movie = this.state.movie;
         return (
             <div className="details">
                 <Header />
                 <div className="flex-containerDetails">
                     <div className="leftDetails">
-
+                        <img src={movie.poster_url} alt={movie.title} />
                     </div>
                     <div className="middleDetails">
-
+                        <div>
+                            <Typography variant="headline" component="h2">{movie.title} </Typography>
+                        </div>
+                        <br />
+                        <div>
+                            <Typography>
+                                <span className="bold">Genres: </span> {movie.genres.join(', ')}
+                            </Typography>
+                        </div>
+                        <div>
+                            <Typography><span className="bold">Duration:</span> {movie.duration} </Typography>
+                        </div>
+                        <div>
+                            <Typography><span className="bold">Release Date:</span> {new Date(movie.release_date).toDateString()} </Typography>
+                        </div>
+                        <div>
+                            <Typography><span className="bold"> Rating:</span> {movie.critics_rating}  </Typography>
+                        </div>
+                        <div className="marginTop16">
+                            <Typography><span className="bold">Plot:</span> <a href={movie.wiki_url}>(Wiki Link)</a> {movie.storyline} </Typography>
+                        </div>
                     </div>
                     <div className="rightDetails">
 
