@@ -23,7 +23,7 @@
 header {
     background: #181818;
 }
-ul {
+.app-header ul {
     text-align: right;
     width: 100%;
 }
