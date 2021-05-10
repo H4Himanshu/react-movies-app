@@ -9,6 +9,8 @@ import { GridList } from '@material-ui/core';
 import Input from '@material-ui/core/Input';
 import genres from '../../assets/genres';
 import Select from '@material-ui/core/Select';
+import artists from '../../assets/artists';
+import TextField from '@material-ui/core/TextField';
 
 const styles = theme => ({
     root: {
@@ -51,7 +53,8 @@ class Home extends Component {
         super();
         this.state = {
             movieName: "",
-            genres: []
+            genres: [],
+            artists: []
         }
     }
 
@@ -71,8 +74,12 @@ class Home extends Component {
     }
 
     genreSelectHandler = (e) => {
-        debugger;
         this.setState({genres: e.target.value});
+    }
+
+    artistSelectHandler = (e) => {
+        debugger;
+        this.setState({artists: e.target.value});
     }
 
     render() {
@@ -133,6 +140,30 @@ class Home extends Component {
                                             </MenuItem>
                                         ))}
                                     </Select>
+                                </FormControl>
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel htmlFor="select-multiple-checkbox">Artists</InputLabel>
+                                    <Select multiple 
+                                        input={<Input id="select-multiple-checkbox" />}
+                                        renderValue={selected => selected.join(',')}
+                                        value={this.state.artists}
+                                        onChange={this.artistSelectHandler}>
+                                        <MenuItem value="0">None</MenuItem>
+                                        {artists.map(artist => (
+                                            <MenuItem key={artist.id} value={artist.first_name+ " " +artist.last_name}>
+                                                <Checkbox checked={this.state.artists.indexOf(artist.first_name+ " " +artist.last_name) > -1}></Checkbox>
+                                                <ListItemText primary={artist.first_name+ " " +artist.last_name}></ListItemText>
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                                <FormControl className={classes.formControl}>
+                                    <TextField id="release-date-start" 
+                                    label="Release Date Start"
+                                    type="date"
+                                    defaultValue=""
+                                    InputLabelProps={{shrink: true}}>
+                                    </TextField>
                                 </FormControl>
                             </CardContent>
 
