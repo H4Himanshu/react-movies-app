@@ -3,7 +3,7 @@ import './Home.css';
 import Header from '../../common/header/Header';
 import { withStyles } from '@material-ui/core/styles';
 import moviesData from '../../assets/movieData';
-import { Card, CardContent, Checkbox, FormControl, GridListTile, InputLabel, ListItemText, MenuItem, Typography } from '@material-ui/core';
+import { Button, Card, CardContent, Checkbox, FormControl, GridListTile, InputLabel, ListItemText, MenuItem, Typography } from '@material-ui/core';
 import { GridListTileBar } from '@material-ui/core';
 import { GridList } from '@material-ui/core';
 import Input from '@material-ui/core/Input';
@@ -11,6 +11,8 @@ import genres from '../../assets/genres';
 import Select from '@material-ui/core/Select';
 import artists from '../../assets/artists';
 import TextField from '@material-ui/core/TextField';
+import Details from '../../screens/details/Details';
+import ReactDOM from 'react-dom';
 
 const styles = theme => ({
     root: {
@@ -74,12 +76,16 @@ class Home extends Component {
     }
 
     genreSelectHandler = (e) => {
-        this.setState({genres: e.target.value});
+        this.setState({ genres: e.target.value });
     }
 
     artistSelectHandler = (e) => {
+        this.setState({ artists: e.target.value });
+    }
+
+    movieClickHandler = (movieId) => {
         debugger;
-        this.setState({artists: e.target.value});
+        ReactDOM.render(<Details movieId={movieId} />, document.getElementById('root'));
     }
 
     render() {
@@ -102,7 +108,7 @@ class Home extends Component {
                     <div className="left">
                         <GridList cellHeight={350} cols={4} className={classes.gridList}>
                             {moviesData.map(movie => (
-                                <GridListTile key={movie.id}>
+                                <GridListTile key={movie.id} onClick={() => this.movieClickHandler(movie.id)} className="margin-movie">
                                     <img src={movie.poster_url} alt={movie.title} />
                                     <GridListTileBar
                                         title={movie.title}
@@ -127,7 +133,7 @@ class Home extends Component {
                                 </FormControl>
                                 <FormControl className={classes.formControl}>
                                     <InputLabel htmlFor="select-multiple-checkbox">Genre</InputLabel>
-                                    <Select multiple 
+                                    <Select multiple
                                         input={<Input id="select-multiple-checkbox" />}
                                         renderValue={selected => selected.join(',')}
                                         value={this.state.genres}
@@ -143,27 +149,41 @@ class Home extends Component {
                                 </FormControl>
                                 <FormControl className={classes.formControl}>
                                     <InputLabel htmlFor="select-multiple-checkbox">Artists</InputLabel>
-                                    <Select multiple 
+                                    <Select multiple
                                         input={<Input id="select-multiple-checkbox" />}
                                         renderValue={selected => selected.join(',')}
                                         value={this.state.artists}
                                         onChange={this.artistSelectHandler}>
                                         <MenuItem value="0">None</MenuItem>
                                         {artists.map(artist => (
-                                            <MenuItem key={artist.id} value={artist.first_name+ " " +artist.last_name}>
-                                                <Checkbox checked={this.state.artists.indexOf(artist.first_name+ " " +artist.last_name) > -1}></Checkbox>
-                                                <ListItemText primary={artist.first_name+ " " +artist.last_name}></ListItemText>
+                                            <MenuItem key={artist.id} value={artist.first_name + " " + artist.last_name}>
+                                                <Checkbox checked={this.state.artists.indexOf(artist.first_name + " " + artist.last_name) > -1}></Checkbox>
+                                                <ListItemText primary={artist.first_name + " " + artist.last_name}></ListItemText>
                                             </MenuItem>
                                         ))}
                                     </Select>
                                 </FormControl>
                                 <FormControl className={classes.formControl}>
-                                    <TextField id="release-date-start" 
-                                    label="Release Date Start"
-                                    type="date"
-                                    defaultValue=""
-                                    InputLabelProps={{shrink: true}}>
+                                    <TextField id="release-date-start"
+                                        label="Release Date Start"
+                                        type="date"
+                                        defaultValue=""
+                                        InputLabelProps={{ shrink: true }}>
                                     </TextField>
+                                </FormControl>
+                                <FormControl className={classes.formControl}>
+                                    <TextField id="release-date-end"
+                                        label="Release Date End"
+                                        type="date"
+                                        defaultValue=""
+                                        InputLabelProps={{ shrink: true }}>
+                                    </TextField>
+                                </FormControl>
+                                <br /><br />
+                                <FormControl className={classes.formControl}>
+                                    <Button variant="contained" color="primary">
+                                        APPLY
+                                    </Button>
                                 </FormControl>
                             </CardContent>
 
